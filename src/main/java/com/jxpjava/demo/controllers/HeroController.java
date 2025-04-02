@@ -2,16 +2,16 @@ package com.jxpjava.demo.controllers;
 
 import com.jxpjava.demo.model.Hero;
 import com.jxpjava.demo.services.HeroService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/heroes")
+@AllArgsConstructor
 public class HeroController {
 
-    @Autowired
     private HeroService heroService;
 
     @GetMapping

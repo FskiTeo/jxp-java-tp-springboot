@@ -2,17 +2,18 @@ package com.jxpjava.demo.services;
 
 import com.jxpjava.demo.model.Hero;
 import com.jxpjava.demo.model.repositories.HeroRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
 
 @Service
+@AllArgsConstructor
 public class HeroService {
 
-    @Autowired
     private HeroRepository heroRepository;
+    private static final Random random = new Random();
 
     public List<Hero> getAllHeroes() {
         return heroRepository.findAll();
@@ -28,8 +29,11 @@ public class HeroService {
 
     public Hero getRandomHero() {
         List<Hero> heroes = heroRepository.findAll();
-        Random random = new Random();
-        return heroes.get(random.nextInt(heroes.size()));
+        Hero hero = heroes.get(random.nextInt(heroes.size()));
+        if (hero.getStrength() + hero.getDefense() + hero.getSpeed() + hero.getAccuracy() + hero.getIntelligence() + hero.getLuck() > 300) {
+            throw new RuntimeException("La somme des propriétés du héros est supérieure à 300");
+        }
+        return hero;
     }
 
     public List<Hero> searchHeroesByName(String name) {
